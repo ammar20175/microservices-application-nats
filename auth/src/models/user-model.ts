@@ -1,4 +1,5 @@
 import { Schema, model, Model, Document } from "mongoose";
+import { PasswordService } from "../../services";
 
 interface UserAttrs {
 	email: string;
@@ -17,6 +18,14 @@ interface UserDoc extends Document {
 const userSchema = new Schema({
 	email: { type: String, required: true },
 	password: { type: String, required: true },
+});
+
+userSchema.pre("save", async function (done) {
+	if (this.isModified("password")) {
+		const hashed = await PasswordService.toHash(this.get("password"));
+		this.set("password", hashed);
+	}
+	done();
 });
 
 userSchema.statics.build = (attrs: UserAttrs) => {

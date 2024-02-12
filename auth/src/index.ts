@@ -9,6 +9,9 @@ import { NotFoundError } from "./errors";
 const app = express();
 app.use(json());
 
+app.get("/api/users", (req, res) => {
+	res.status(200).json("hello");
+});
 app.use(authRouter);
 
 app.all("*", async (req, res) => {
