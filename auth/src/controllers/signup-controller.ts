@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { validationResult } from "express-validator";
 import { BadRequestError, RequestValidationError } from "../errors";
 import { User } from "../models";
+import jwt from "jsonwebtoken";
 
 const signUpController = async (req: Request, res: Response) => {
 	const errors = validationResult(req);
@@ -11,7 +12,7 @@ const signUpController = async (req: Request, res: Response) => {
 	}
 
 	const { email, password } = req.body;
-	console.log(email, password);
+
 	const existingUser = await User.findOne({ email });
 
 	if (existingUser) {
@@ -23,10 +24,21 @@ const signUpController = async (req: Request, res: Response) => {
 		password,
 	});
 
-	const su = await user.save();
-	console.log(su);
+	await user.save();
 
-	res.status(200).send({});
+	const userJwt = jwt.sign(
+		{
+			id: user.id,
+			email: user.email,
+		},
+		process.env.JWT_KEY!
+	);
+
+	req.session = {
+		jwt: userJwt,
+	};
+
+	res.status(200).send(user);
 };
 
 export default signUpController;

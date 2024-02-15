@@ -1,5 +1,5 @@
 import { Schema, model, Model, Document } from "mongoose";
-import { PasswordService } from "../../services";
+import { PasswordService } from "../services";
 
 interface UserAttrs {
 	email: string;
@@ -15,10 +15,22 @@ interface UserDoc extends Document {
 	password: string;
 }
 
-const userSchema = new Schema({
-	email: { type: String, required: true },
-	password: { type: String, required: true },
-});
+const userSchema = new Schema(
+	{
+		email: { type: String, required: true },
+		password: { type: String, required: true },
+	},
+	{
+		toJSON: {
+			transform(doc, ret) {
+				ret.id = ret._id;
+				delete ret._id;
+				delete ret.password;
+				delete ret.__v;
+			},
+		},
+	}
+);
 
 userSchema.pre("save", async function (done) {
 	if (this.isModified("password")) {
