@@ -1,29 +1,18 @@
 import { Request, Response } from "express";
-import { validationResult } from "express-validator";
-import { BadRequestError, RequestValidationError } from "../errors";
+import { BadRequestError } from "../errors";
 import { User } from "../models";
 import jwt from "jsonwebtoken";
 
 const signUpController = async (req: Request, res: Response) => {
-	const errors = validationResult(req);
-
-	if (!errors.isEmpty()) {
-		throw new RequestValidationError(errors.array());
-	}
-
 	const { email, password } = req.body;
 
 	const existingUser = await User.findOne({ email });
 
 	if (existingUser) {
-		throw new BadRequestError("Email in use.");
+		throw new BadRequestError("Email in use");
 	}
 
-	const user = User.build({
-		email,
-		password,
-	});
-
+	const user = User.build({ email, password });
 	await user.save();
 
 	const userJwt = jwt.sign(
@@ -38,7 +27,7 @@ const signUpController = async (req: Request, res: Response) => {
 		jwt: userJwt,
 	};
 
-	res.status(200).send(user);
+	res.status(201).send(user);
 };
 
 export default signUpController;
