@@ -6,10 +6,17 @@ import {
 	signOutController,
 } from "../controllers";
 import { body } from "express-validator";
-import { validateRequestMiddleware } from "../middlewares";
+import {
+	currentUserMiddleware,
+	validateRequestMiddleware,
+} from "../middlewares";
 const authRouter = epxress.Router();
 
-authRouter.get("/api/users/currentuser", currentUserController);
+authRouter.get(
+	"/api/users/currentuser",
+	currentUserMiddleware,
+	currentUserController
+);
 
 authRouter.post(
 	"/api/users/signup",
