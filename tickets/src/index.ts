@@ -12,7 +12,7 @@ const start = async () => {
 
 	try {
 		await mongoose.connect(process.env.MONGO_URI);
-		console.log("Auth database connected");
+		console.log("Tickets database connected");
 	} catch (error) {
 		console.log(error);
 	}
