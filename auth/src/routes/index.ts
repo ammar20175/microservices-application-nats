@@ -9,7 +9,7 @@ import { body } from "express-validator";
 import {
 	currentUserMiddleware,
 	validateRequestMiddleware,
-} from "../middlewares";
+} from "@ammarahmad/common";
 const authRouter = epxress.Router();
 
 authRouter.get(
