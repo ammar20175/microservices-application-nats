@@ -41,9 +41,9 @@ userSchema.pre("save", async function (done) {
 });
 
 userSchema.statics.build = (attrs: UserAttrs) => {
-	return new User(attrs);
+	return new UserModel(attrs);
 };
 
-const User = model<UserDoc, UserModel>("User", userSchema);
+const UserModel = model<UserDoc, UserModel>("User", userSchema);
 
-export default User;
+export default UserModel;

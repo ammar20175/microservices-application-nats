@@ -2,12 +2,12 @@ import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { BadRequestError } from "@ammarahmad/common";
 import { PasswordService } from "../services";
-import { User } from "../models";
+import { UserModel } from "../models";
 
 const signInController = async (req: Request, res: Response) => {
 	const { email, password } = req.body;
 
-	const existingUser = await User.findOne({ email });
+	const existingUser = await UserModel.findOne({ email });
 	if (!existingUser) {
 		throw new BadRequestError("Invalid credentials");
 	}
