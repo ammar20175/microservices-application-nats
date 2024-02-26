@@ -5,7 +5,11 @@ import {
 	validateRequestMiddleware,
 	requireAuthMiddleware,
 } from "@ammarahmad/common";
-import { newTicketController } from "../controllers";
+import {
+	newTicketController,
+	showMultipleTicketController,
+	showSingleTicketController,
+} from "../controllers";
 const ticketsRouter = epxress.Router();
 
 ticketsRouter.post(
@@ -20,5 +24,9 @@ ticketsRouter.post(
 	validateRequestMiddleware,
 	newTicketController
 );
+
+ticketsRouter.get("/api/tickets", showMultipleTicketController);
+
+ticketsRouter.get("/api/tickets/:id", showSingleTicketController);
 
 export default ticketsRouter;

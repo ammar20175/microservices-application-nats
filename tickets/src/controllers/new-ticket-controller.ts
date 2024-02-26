@@ -1,7 +1,18 @@
 import { Request, Response } from "express";
+import { TicketModel } from "../models";
 
-const newTicketController = (req: Request, res: Response) => {
-	res.sendStatus(200);
+const newTicketController = async (req: Request, res: Response) => {
+	const { title, price } = req.body;
+
+	const ticket = TicketModel.build({
+		title,
+		price,
+		userId: req.currentUser!.id,
+	});
+
+	await ticket.save();
+
+	res.status(201).send(ticket);
 };
 
 export default newTicketController;
