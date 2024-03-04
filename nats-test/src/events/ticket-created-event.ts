@@ -8,5 +8,4 @@ interface TicketCreatedEvent {
 		price: number;
 	};
 }
-
 export default TicketCreatedEvent;

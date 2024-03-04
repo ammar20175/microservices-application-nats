@@ -1,5 +1,6 @@
 import nats from "node-nats-streaming";
 import { randomBytes } from "crypto";
+import { TicketCreatedListener } from "./events";
 
 const stan = nats.connect("ticketing", randomBytes(4).toString("hex"), {
 	url: "http://localhost:4222",
@@ -13,7 +14,7 @@ stan.on("connect", () => {
 		process.exit();
 	});
 
-	// new TicketCreatedListener(stan).listen();
+	new TicketCreatedListener(stan).listen();
 });
 
 process.on("SIGINT", () => stan.close());
