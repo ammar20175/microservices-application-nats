@@ -13,6 +13,7 @@ stan.on("connect", async () => {
 		id: "123",
 		title: "concert",
 		price: 20,
+		userId: "2345",
 	});
 	// const data = JSON.stringify({
 	// 	id: "123",
