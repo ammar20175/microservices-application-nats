@@ -11,8 +11,25 @@ const start = async () => {
 		throw new Error("MONGO URI IS NOT DEFINED");
 	}
 
+	if (!process.env.NATS_CLIENT_ID) {
+		throw new Error(" NATS CLIENT ID IS NOT DEFINED");
+	}
+
+	if (!process.env.NATS_URL) {
+		throw new Error("NATS URL IS NOT DEFINED");
+	}
+
+	if (!process.env.NATS_CLUSTER_ID) {
+		throw new Error("NATS CLUSTER ID IS NOT DEFINED");
+	}
+
 	try {
-		await natsWrapper.connect("ticketing", "alsdkj", "http://nats-srv:4222");
+		await natsWrapper.connect(
+			process.env.NATS_CLUSTER_ID,
+			process.env.NATS_CLIENT_ID,
+			process.env.NATS_URL
+		);
+
 		natsWrapper.client.on("close", () => {
 			console.log("NATS connection closed!");
 			process.exit();
