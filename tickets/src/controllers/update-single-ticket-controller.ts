@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { TicketModel } from "../models";
 import { NotAuthorizedError, NotFoundError } from "@ammarahmad/common";
+import natsWrapper from "../nats-wrapper";
+import { TicketUpdatedPublisher } from "../events";
 
 const updateSingleTicketController = async (req: Request, res: Response) => {
 	const { id } = req.params;
@@ -22,6 +24,12 @@ const updateSingleTicketController = async (req: Request, res: Response) => {
 
 	await ticket.save();
 
+	new TicketUpdatedPublisher(natsWrapper.client).publish({
+		id: ticket.id,
+		title: ticket.title,
+		price: ticket.price,
+		userId: ticket.userId,
+	});
 	res.send(ticket);
 };
 
