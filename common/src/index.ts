@@ -20,4 +20,5 @@ export {
 	Subjects,
 	TicketCreatedEvent,
 	TicketUpdatedEvent,
+	OrderStatus, 
 } from "./events";

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Subjects = exports.Publisher = exports.Listener = exports.validateRequestMiddleware = exports.requireAuthMiddleware = exports.errorHandlerMiddleware = exports.currentUserMiddleware = exports.RequestValidationError = exports.NotFoundError = exports.NotAuthorizedError = exports.CustomError = exports.BadRequestError = void 0;
+exports.OrderStatus = exports.Subjects = exports.Publisher = exports.Listener = exports.validateRequestMiddleware = exports.requireAuthMiddleware = exports.errorHandlerMiddleware = exports.currentUserMiddleware = exports.RequestValidationError = exports.NotFoundError = exports.NotAuthorizedError = exports.CustomError = exports.BadRequestError = void 0;
 // main file
 var errors_1 = require("./errors");
 Object.defineProperty(exports, "BadRequestError", { enumerable: true, get: function () { return errors_1.BadRequestError; } });
@@ -17,3 +17,4 @@ var events_1 = require("./events");
 Object.defineProperty(exports, "Listener", { enumerable: true, get: function () { return events_1.Listener; } });
 Object.defineProperty(exports, "Publisher", { enumerable: true, get: function () { return events_1.Publisher; } });
 Object.defineProperty(exports, "Subjects", { enumerable: true, get: function () { return events_1.Subjects; } });
+Object.defineProperty(exports, "OrderStatus", { enumerable: true, get: function () { return events_1.OrderStatus; } });

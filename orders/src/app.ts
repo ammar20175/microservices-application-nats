@@ -7,6 +7,7 @@ import {
 	errorHandlerMiddleware,
 	NotFoundError,
 } from "@ammarahmad/common";
+import ordersRouter from "./routes";
 
 const app = express();
 app.set("trust proxy", true);
@@ -22,7 +23,7 @@ app.get("/api/ticket", (req, res) => {
 	res.status(200).json("hello from tickets");
 });
 
-// app.use(ticketsRouter);
+app.use(ordersRouter);
 
 app.all("*", async (req, res) => {
 	throw new NotFoundError();

@@ -1,34 +1,42 @@
 import mongoose from "mongoose";
+import { OrderStatus } from "@ammarahmad/common";
 
-interface TicketAttrs {
-	title: string;
-	price: number;
+interface OrderAttrs {
 	userId: string;
+	status: OrderStatus;
+	expiresAt: Date;
+	ticket: TicketDoc;
 }
 
-interface TicketDoc extends mongoose.Document {
-	title: string;
-	price: number;
+interface OrderDoc extends mongoose.Document {
 	userId: string;
+	status: OrderStatus;
+	expiresAt: Date;
+	ticket: TicketDoc;
 }
 
-interface TicketModel extends mongoose.Model<TicketDoc> {
-	build(attrs: TicketAttrs): TicketDoc;
+interface OrderModel extends mongoose.Model<OrderDoc> {
+	build(attrs: OrderAttrs): OrderDoc;
 }
 
-const ticketSchema = new mongoose.Schema(
+const orderSchema = new mongoose.Schema(
 	{
-		title: {
-			type: String,
-			required: true,
-		},
-		price: {
-			type: Number,
-			required: true,
-		},
 		userId: {
 			type: String,
 			required: true,
+		},
+		status: {
+			type: String,
+			required: true,
+			enum: Object.values(OrderStatus),
+			default: OrderStatus.Created,
+		},
+		expiresAt: {
+			type: mongoose.Schema.Types.Date,
+		},
+		ticket: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "Ticket",
 		},
 	},
 	{
@@ -41,13 +49,10 @@ const ticketSchema = new mongoose.Schema(
 	}
 );
 
-ticketSchema.statics.build = (attrs: TicketAttrs) => {
-	return new TicketModel(attrs);
+orderSchema.statics.build = (attrs: OrderAttrs) => {
+	return new OrderModel(attrs);
 };
 
-const TicketModel = mongoose.model<TicketDoc, TicketModel>(
-	"Ticket",
-	ticketSchema
-);
+const OrderModel = mongoose.model<OrderDoc, OrderModel>("Order", orderSchema);
 
-export default TicketModel;
+export default OrderModel;
