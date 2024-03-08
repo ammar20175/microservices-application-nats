@@ -5,6 +5,8 @@ import {
   NotFoundError,
   OrderStatus,
 } from "@ammarahmad/common";
+import { OrderCreatedPublisher } from "../events";
+import natsWrapper from "../nats-wrapper";
 
 const EXPIRATION_WINDOW_SECONDS = 15 * 60;
 
@@ -34,6 +36,17 @@ const newOrderController = async (req: Request, res: Response) => {
   });
 
   await order.save();
+
+  new OrderCreatedPublisher(natsWrapper.client).publish({
+    id: order.id,
+    status: order.status,
+    userId: order.userId,
+    expiresAt: order.expiresAt.toISOString(),
+    ticket: {
+      id: ticket.id,
+      price: ticket.price,
+    },
+  });
 
   res.status(201).send(order);
 };

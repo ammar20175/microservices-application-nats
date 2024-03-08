@@ -4,3 +4,5 @@ export { default as Publisher } from "./base-publisher";
 export { default as TicketCreatedEvent } from "./ticket-created-event";
 export { default as TicketUpdatedEvent } from "./ticket-updated-event";
 export { default as OrderStatus } from "./types/order-status";
+export { default as OrderCreatedEvent } from "./order-created-event";
+export { default as OrderCancelledEvent } from "./order-cancelled-event";
