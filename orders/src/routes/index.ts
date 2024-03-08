@@ -8,7 +8,7 @@ import {
 import {
 	deleteSingleOrderController,
 	newOrderController,
-	showMultipleOrdersController,
+	showAllOrdersController,
 	showSingleOrderController,
 } from "../controllers";
 import mongoose from "mongoose";
@@ -29,7 +29,7 @@ ordersRouter.post(
 	newOrderController
 );
 
-ordersRouter.get("/api/orders", showMultipleOrdersController);
+ordersRouter.get("/api/orders", showAllOrdersController);
 
 ordersRouter.get("/api/orders/:orderId", showSingleOrderController);
 
