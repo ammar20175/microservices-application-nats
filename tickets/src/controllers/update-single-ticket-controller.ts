@@ -5,32 +5,34 @@ import natsWrapper from "../nats-wrapper";
 import { TicketUpdatedPublisher } from "../events";
 
 const updateSingleTicketController = async (req: Request, res: Response) => {
-	const { id } = req.params;
-	const { title, price } = req.body;
-	const ticket = await TicketModel.findById(id);
+  const { id } = req.params;
+  const { title, price } = req.body;
+  const ticket = await TicketModel.findById(id);
 
-	if (!ticket) {
-		throw new NotFoundError();
-	}
+  if (!ticket) {
+    throw new NotFoundError();
+  }
 
-	if (ticket.userId !== req.currentUser!.id) {
-		throw new NotAuthorizedError();
-	}
+  if (ticket.userId !== req.currentUser!.id) {
+    throw new NotAuthorizedError();
+  }
 
-	ticket.set({
-		title,
-		price,
-	});
+  ticket.set({
+    title,
+    price,
+  });
 
-	await ticket.save();
+  await ticket.save();
 
-	new TicketUpdatedPublisher(natsWrapper.client).publish({
-		id: ticket.id,
-		title: ticket.title,
-		price: ticket.price,
-		userId: ticket.userId,
-	});
-	res.send(ticket);
+  new TicketUpdatedPublisher(natsWrapper.client).publish({
+    id: ticket.id,
+    title: ticket.title,
+    price: ticket.price,
+    userId: ticket.userId,
+    version: ticket.version,
+  });
+
+  res.send(ticket);
 };
 
 export default updateSingleTicketController;
