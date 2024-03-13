@@ -1,6 +1,10 @@
 import { Request, Response } from "express";
 import { TicketModel } from "../models";
-import { NotAuthorizedError, NotFoundError } from "@ammarahmad/common";
+import {
+  BadRequestError,
+  NotAuthorizedError,
+  NotFoundError,
+} from "@ammarahmad/common";
 import natsWrapper from "../nats-wrapper";
 import { TicketUpdatedPublisher } from "../events";
 
@@ -11,6 +15,10 @@ const updateSingleTicketController = async (req: Request, res: Response) => {
 
   if (!ticket) {
     throw new NotFoundError();
+  }
+
+  if (ticket.orderId) {
+    throw new BadRequestError("Cannot edit a reserved ticket");
   }
 
   if (ticket.userId !== req.currentUser!.id) {
