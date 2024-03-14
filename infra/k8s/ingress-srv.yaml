@@ -4,7 +4,7 @@ metadata:
   name: ingress-service
   annotations:
     kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/use-regex: 'true'
 spec:
   rules:
     - host: ticketing.dev
@@ -30,7 +30,7 @@ spec:
               service:
                 name: orders-srv
                 port:
-                  number: 3000                  
+                  number: 3000
           - path: /?(.*)
             pathType: ImplementationSpecific
             backend:

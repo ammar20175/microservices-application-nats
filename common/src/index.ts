@@ -23,4 +23,5 @@ export {
   OrderStatus,
   OrderCancelledEvent,
   OrderCreatedEvent,
+  ExpirationCompleteEvent,
 } from "./events";

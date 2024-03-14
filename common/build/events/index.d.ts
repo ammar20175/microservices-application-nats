@@ -6,3 +6,4 @@ export { default as TicketUpdatedEvent } from "./ticket-updated-event";
 export { default as OrderStatus } from "./types/order-status";
 export { default as OrderCreatedEvent } from "./order-created-event";
 export { default as OrderCancelledEvent } from "./order-cancelled-event";
+export { default as ExpirationCompleteEvent } from "./expiration-complete-event";
