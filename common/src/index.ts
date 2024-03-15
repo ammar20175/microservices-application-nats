@@ -24,4 +24,5 @@ export {
   OrderCancelledEvent,
   OrderCreatedEvent,
   ExpirationCompleteEvent,
+  PaymentCreatedEvent,
 } from "./events";
